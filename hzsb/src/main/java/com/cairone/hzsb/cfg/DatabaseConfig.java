@@ -2,22 +2,37 @@ package com.cairone.hzsb.cfg;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jta.atomikos.AtomikosDataSourceBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import com.mysql.jdbc.jdbc2.optional.MysqlXADataSource;
 
 @Configuration
+@EnableTransactionManagement
 public class DatabaseConfig {
-
+	
+	@Autowired
+	private DatabaseProps databaseProps = null;
+	
 	@Bean
 	public DataSource databaseDataSource() {
-		return null;
-//		JtdsDataSource ds = new JtdsDataSource();
-//		
-//		ds.setServerName("localhost");
-//		ds.setDatabaseName("EJERCICIO_JPA");
-//		ds.setUser("sa");
-//		ds.setPassword("rv760");
-//		
-//		return ds;
+		
+		MysqlXADataSource xaDataSource = new MysqlXADataSource();
+		
+		xaDataSource.setUrl(databaseProps.getUrl());
+		xaDataSource.setPinGlobalTxToPhysicalConnection(true);
+		xaDataSource.setUser(databaseProps.getUser());
+		xaDataSource.setPassword(databaseProps.getPassword());
+		
+		AtomikosDataSourceBean ds = new AtomikosDataSourceBean();
+		
+		ds.setXaDataSource(xaDataSource);
+		ds.setUniqueResourceName("hzsb");
+		ds.setPoolSize(5);
+		
+		return ds;
 	}
 }

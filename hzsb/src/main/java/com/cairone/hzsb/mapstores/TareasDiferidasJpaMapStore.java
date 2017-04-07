@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cairone.hzsb.entities.HzTareaDiferidaEntity;
 import com.cairone.hzsb.entities.HzTareaDiferidaPkEntity;
@@ -18,7 +19,7 @@ import com.cairone.hzsb.repositories.HzTareaDiferidaRepository;
 import com.cairone.hzsb.tasks.TaskKey;
 import com.cairone.hzsb.tasks.TaskQueue;
 
-@Component
+@Component @Transactional
 public class TareasDiferidasJpaMapStore implements TareasDiferidasMapStore {
 
 	@Autowired private HzTareaDiferidaRepository hzTareaDiferidaRepository = null;

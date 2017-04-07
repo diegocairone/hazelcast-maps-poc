@@ -33,11 +33,10 @@ public class TestService {
 
 	public static Logger logger = LoggerFactory.getLogger(TestService.class);
 	
-	@Autowired
-	private HazelcastInstance hazelcastInstance = null;
-
-	@Autowired
-	private PaisRepository paisRepository = null;
+	@Autowired private HazelcastInstance hazelcastInstance = null;
+	@Autowired private UserTransactionManager tm = null;
+	
+	@Autowired private PaisRepository paisRepository = null;
 	
 	@Transactional
 	public void agregar() throws NotSupportedException, SystemException, IllegalStateException, RollbackException, SecurityException, HeuristicMixedException, HeuristicRollbackException, SQLException {
@@ -46,9 +45,6 @@ public class TestService {
 		
 		HazelcastXAResource xaResource = hazelcastInstance.getXAResource();
 		
-		UserTransactionManager tm = new UserTransactionManager();
-        tm.begin();
-        
         Transaction transaction = tm.getTransaction();
         transaction.enlistResource(xaResource);
 		
@@ -69,13 +65,12 @@ public class TestService {
 		mapTareasDiferidas.put(taskKey, taskQueue);
 
 		transaction.delistResource(xaResource, XAResource.TMSUCCESS);
-        tm.commit();
-
+        
 		logger.info("AGRENADO A LA TABLA ...");
 		
 		PaisEntity paisEntity = new PaisEntity(100, "COLOMBIA", 10);
-		//PaisEntity paisEntity = new PaisEntity(100, null, 10);
 		paisRepository.save(paisEntity);
-
+		//PaisEntity paisEntity = new PaisEntity(100, null, 10);
+		
 	}
 }
