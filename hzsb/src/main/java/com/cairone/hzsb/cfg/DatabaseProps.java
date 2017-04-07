@@ -7,18 +7,27 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "database")
 public class DatabaseProps {
 
-	private String url = null;
+	private String serverName = null;
+	private String databaseName = null;
 	private String user = null;
 	private String password = null;
 	
 	public DatabaseProps() {}
 
-	public String getUrl() {
-		return url;
+	public String getServerName() {
+		return serverName;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	public void setServerName(String serverName) {
+		this.serverName = serverName;
+	}
+
+	public String getDatabaseName() {
+		return databaseName;
+	}
+
+	public void setDatabaseName(String databaseName) {
+		this.databaseName = databaseName;
 	}
 
 	public String getUser() {
@@ -36,4 +45,5 @@ public class DatabaseProps {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 }

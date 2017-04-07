@@ -8,30 +8,34 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.mysql.jdbc.jdbc2.optional.MysqlXADataSource;
+import com.microsoft.sqlserver.jdbc.SQLServerXADataSource;
 
 @Configuration
 @EnableTransactionManagement
 public class DatabaseConfig {
 	
-	@Autowired
-	private DatabaseProps databaseProps = null;
+	@Autowired private DatabaseProps databaseProps = null;
 	
 	@Bean
 	public DataSource databaseDataSource() {
 		
-		MysqlXADataSource xaDataSource = new MysqlXADataSource();
+		SQLServerXADataSource xaDataSource = new SQLServerXADataSource();
+		//JtdsDataSource xaDataSource = new JtdsDataSource();
 		
-		xaDataSource.setUrl(databaseProps.getUrl());
-		xaDataSource.setPinGlobalTxToPhysicalConnection(true);
+		xaDataSource.setServerName(databaseProps.getServerName());
+		xaDataSource.setDatabaseName(databaseProps.getDatabaseName());
 		xaDataSource.setUser(databaseProps.getUser());
 		xaDataSource.setPassword(databaseProps.getPassword());
-		
+		/*
+		Properties p = new Properties();
+		p.put("hibernate.dialect", "");
+		*/
 		AtomikosDataSourceBean ds = new AtomikosDataSourceBean();
 		
 		ds.setXaDataSource(xaDataSource);
 		ds.setUniqueResourceName("hzsb");
 		ds.setPoolSize(5);
+		//ds.setXaProperties(p);
 		
 		return ds;
 	}
