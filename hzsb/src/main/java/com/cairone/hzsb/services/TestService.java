@@ -45,8 +45,8 @@ public class TestService {
 		
 		HazelcastXAResource xaResource = hazelcastInstance.getXAResource();
 		
-        Transaction transaction = tm.getTransaction();
-        transaction.enlistResource(xaResource);
+		Transaction transaction = tm.getTransaction();
+		transaction.enlistResource(xaResource);
 		
 		TransactionContext context = xaResource.getTransactionContext();
 		TransactionalMap<TaskKey, TaskQueue> mapTareasDiferidas = context.getMap("TAREAS-DIFERIDAS");

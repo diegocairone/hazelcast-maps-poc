@@ -1,7 +1,5 @@
 package com.cairone.hzsb;
 
-import java.util.LinkedList;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,14 +8,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.cairone.hzsb.services.TestService;
-import com.cairone.hzsb.tasks.Task;
-import com.cairone.hzsb.tasks.TaskImplFactorial;
-import com.cairone.hzsb.tasks.TaskKey;
-import com.cairone.hzsb.tasks.TaskQueue;
-import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.TransactionalMap;
-import com.hazelcast.transaction.TransactionContext;
-import com.hazelcast.transaction.TransactionException;
 
 @SpringBootApplication
 public class HzSpringBoot implements CommandLineRunner
@@ -25,7 +15,7 @@ public class HzSpringBoot implements CommandLineRunner
 	public static Logger logger = LoggerFactory.getLogger(HzSpringBoot.class);
 	
 	//@Autowired
-	private HazelcastInstance hazelcastInstance = null;
+	//private HazelcastInstance hazelcastInstance = null;
 	
 	@Autowired
 	private TestService testService = null;
@@ -46,7 +36,7 @@ public class HzSpringBoot implements CommandLineRunner
 			logger.info("EXEPCION: ", ex.getMessage());
 		}
     }
-    
+    /*
 	public void run0(String... args) throws Exception {
 
 		logger.info("Iniciando consumidor ...");
@@ -111,5 +101,5 @@ public class HzSpringBoot implements CommandLineRunner
 			context.rollbackTransaction();
 			logger.error(e.getMessage());
 		}
-	}
+	}*/
 }
