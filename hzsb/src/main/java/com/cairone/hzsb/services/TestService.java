@@ -61,7 +61,6 @@ public class TestService {
 		taskQueue = new TaskQueue();
 		taskQueue.getQueue().add(taskFactorial);
 		
-		//mapTareasDiferidas.put(null, taskQueue);
 		mapTareasDiferidas.put(taskKey, taskQueue);
 
 		transaction.delistResource(xaResource, XAResource.TMSUCCESS);
@@ -70,7 +69,5 @@ public class TestService {
 		
 		PaisEntity paisEntity = new PaisEntity(100, "COLOMBIA", 10);
 		paisRepository.save(paisEntity);
-		//PaisEntity paisEntity = new PaisEntity(100, null, 10);
-		
 	}
 }

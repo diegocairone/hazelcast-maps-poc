@@ -20,22 +20,17 @@ public class DatabaseConfig {
 	public DataSource databaseDataSource() {
 		
 		SQLServerXADataSource xaDataSource = new SQLServerXADataSource();
-		//JtdsDataSource xaDataSource = new JtdsDataSource();
 		
 		xaDataSource.setServerName(databaseProps.getServerName());
 		xaDataSource.setDatabaseName(databaseProps.getDatabaseName());
 		xaDataSource.setUser(databaseProps.getUser());
 		xaDataSource.setPassword(databaseProps.getPassword());
-		/*
-		Properties p = new Properties();
-		p.put("hibernate.dialect", "");
-		*/
+		
 		AtomikosDataSourceBean ds = new AtomikosDataSourceBean();
 		
 		ds.setXaDataSource(xaDataSource);
 		ds.setUniqueResourceName("hzsb");
 		ds.setPoolSize(5);
-		//ds.setXaProperties(p);
 		
 		return ds;
 	}
