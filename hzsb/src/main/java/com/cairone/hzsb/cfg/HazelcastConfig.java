@@ -10,6 +10,8 @@ import com.hazelcast.config.Config;
 import com.hazelcast.config.MapStoreConfig;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.spring.transaction.HazelcastTransactionManager;
+import com.hazelcast.spring.transaction.ManagedTransactionalTaskContext;
 
 @Configuration
 public class HazelcastConfig {
@@ -46,5 +48,17 @@ public class HazelcastConfig {
     	cfg.getGroupConfig().setName(hzClusterName).setPassword(hzClusterPwd);
     	
     	return Hazelcast.newHazelcastInstance(cfg);
+	}
+	
+	@Bean
+	public HazelcastTransactionManager getTransactionManager() {
+		HazelcastTransactionManager transactionManager = new HazelcastTransactionManager(getHazelcastInstance());
+		return transactionManager;
+	}
+	
+	@Bean
+	public ManagedTransactionalTaskContext getTransactionalContext() {
+		ManagedTransactionalTaskContext transactionalContext = new ManagedTransactionalTaskContext(getTransactionManager());
+		return transactionalContext;
 	}
 }
